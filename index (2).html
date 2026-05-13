@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Main Tera 💛 May 13</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html, body {
+      width:100%; height:100%; overflow:hidden;
+      font-family:'Nunito', sans-serif;
+      -webkit-tap-highlight-color:transparent;
+    }
+    body {
+      background: radial-gradient(ellipse at 20% 10%, #1c0a3e 0%, #0d0520 50%, #1a0a2e 100%);
+    }
+
+    /* STARS */
+    #stars { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+    .star {
+      position:absolute; border-radius:50%; background:white;
+      animation:twinkle linear infinite;
+    }
+    @keyframes twinkle {
+      0%,100%{ opacity:.1; transform:scale(1); }
+      50%    { opacity:.9; transform:scale(1.5); }
+    }
+
+    /* EMOJI RAIN */
+    #emojiRain { position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+    .drop {
+      position:absolute; top:-60px; font-size:1.4rem;
+      animation:fallDown linear forwards;
+    }
+    @keyframes fallDown {
+      from { transform:translateY(-60px) rotate(0deg); opacity:1; }
+      to   { transform:translateY(110vh) rotate(360deg); opacity:.1; }
+    }
+
+    /* GLOW */
+    #bgGlow {
+      position:fixed; inset:0;
+      background:radial-gradient(circle at 50% 25%, rgba(255,200,50,.1), transparent 65%);
+      animation:glowPulse 5s ease-in-out infinite alternate;
+      z-index:0; pointer-events:none;
+    }
+    @keyframes glowPulse { from{opacity:.3} to{opacity:1} }
+
+    /* PAGE FLASH */
+    #pageFlash {
+      position:fixed; inset:0;
+      background:radial-gradient(circle,#fffde7,#ffd700,#ff8c00);
+      opacity:0; pointer-events:none; z-index:99998;
+    }
+    .flash { animation:flashAnim .65s ease-out; }
+    @keyframes flashAnim { 0%{opacity:0} 40%{opacity:.9} 100%{opacity:0} }
+
+    /* BUBBLE */
+    #bubble {
+      position:fixed; padding:8px 18px;
+      background:#fffde7; border-radius:22px;
+      font-size:13px; font-weight:800; color:#92650a;
+      box-shadow:0 0 22px rgba(255,200,0,.9);
+      pointer-events:none; opacity:0;
+      transform:translateX(-50%) scale(.7);
+      transition:.25s; z-index:9999;
+    }
+    #bubble.show { opacity:1; transform:translateX(-50%) scale(1.08); }
+
+    /* APP */
+    #app {
+      position:relative; width:100%; height:100%;
+      z-index:10; display:flex;
+      justify-content:center; align-items:center; padding:16px;
+    }
+
+    /* SCREENS */
+    .screen {
+      display:none; flex-direction:column; align-items:center; gap:14px;
+      background:rgba(255,252,230,.97);
+      padding:26px 22px; border-radius:30px;
+      width:100%; max-width:400px;
+      text-align:center;
+      box-shadow:0 0 40px rgba(255,200,0,.35), 0 0 80px rgba(255,160,0,.18);
+      position:relative; z-index:20;
+      animation:popIn .45s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes popIn { from{transform:scale(.85);opacity:0} to{transform:scale(1);opacity:1} }
+    .screen.active { display:flex; }
+
+    /* BADGE */
+    .badge {
+      background:linear-gradient(135deg,#ffd700,#ffb300);
+      color:#3d2600; font-weight:900; font-size:.8rem;
+      padding:4px 16px; border-radius:20px; letter-spacing:.8px;
+      box-shadow:0 2px 14px rgba(255,190,0,.5);
+    }
+
+    /* CAT */
+    .cat-img {
+      width:120px; height:120px; border-radius:50%;
+      object-fit:cover;
+      border:4px solid #ffd700;
+      box-shadow:0 0 24px rgba(255,200,0,.6), 0 0 50px rgba(255,160,0,.2);
+      animation:floatCat 3s ease-in-out infinite;
+      display:block; margin:0 auto;
+    }
+    @keyframes floatCat {
+      0%,100%{ transform:translateY(0) rotate(-2deg); }
+      50%    { transform:translateY(-10px) rotate(2deg); }
+    }
+    .cat-caption {
+      font-size:.75rem; font-weight:800; color:#92650a;
+      background:rgba(255,215,0,.3); padding:3px 12px;
+      border-radius:12px; display:inline-block;
+    }
+
+    /* TYPOGRAPHY */
+    h1 {
+      font-family:'Playfair Display', serif;
+      font-size:2rem; color:#3d2600; line-height:1.3;
+    }
+    h2 {
+      font-family:'Playfair Display', serif;
+      font-size:1.22rem; font-style:italic;
+      color:#3d2600; line-height:1.5;
+    }
+    h3 { font-size:1.05rem; font-weight:800; color:#3d2600; line-height:1.45; }
+    p  { font-size:.93rem; color:#5a3e00; line-height:1.65; }
+
+    .lyric {
+      font-family:'Playfair Display', serif;
+      font-style:italic; font-size:.98rem; color:#7a5000;
+      background:linear-gradient(135deg,rgba(255,215,0,.18),rgba(255,170,0,.08));
+      border-left:4px solid #ffd700;
+      padding:10px 14px; border-radius:0 14px 14px 0;
+      text-align:left; line-height:1.8; width:100%;
+    }
+    .lyric small { font-size:.78rem; opacity:.65; display:block; margin-top:4px; }
+
+    .bigGlow {
+      font-family:'Playfair Display', serif;
+      font-size:2.4rem; font-weight:700;
+      background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+      filter:drop-shadow(0 0 22px rgba(255,190,0,.95));
+      animation:shimmer 2s ease-in-out infinite alternate;
+    }
+    @keyframes shimmer {
+      from{ filter:drop-shadow(0 0 12px rgba(255,180,0,.7)); }
+      to  { filter:drop-shadow(0 0 35px rgba(255,230,0,1)); }
+    }
+
+    /* FADES */
+    .fade { opacity:0; animation:fadeIn 1s forwards; }
+    .d1 { animation-delay:.4s; }
+    .d2 { animation-delay:.9s; }
+    .d3 { animation-delay:1.4s; }
+    @keyframes fadeIn { to{opacity:1} }
+
+    /* BUTTONS */
+    .btns { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; z-index:30; }
+    button {
+      background:linear-gradient(135deg,#ffd700,#ffb300);
+      color:#3d2600; border:none; border-radius:32px;
+      padding:11px 26px; font-size:14px; font-weight:900;
+      cursor:pointer; font-family:'Nunito',sans-serif;
+      box-shadow:0 4px 22px rgba(255,175,0,.6), inset 0 0 8px rgba(255,255,255,.45);
+      transition:.2s all;
+    }
+    button:hover { transform:scale(1.1); box-shadow:0 4px 36px rgba(255,175,0,.95); }
+    button:active { transform:scale(.94); }
+    .noBtn {
+      background:rgba(200,150,0,.1) !important; color:#92650a !important;
+      box-shadow:0 2px 10px rgba(200,140,0,.2) !important;
+      border:1.5px solid #ffd700 !important;
+    }
+    .backBtn {
+      background:none !important; color:#c8a200 !important;
+      box-shadow:none !important; font-size:12px !important;
+      border:none !important; opacity:.7; padding:6px 12px !important;
+    }
+    .yesPulse { animation:yesPulse .5s; }
+    @keyframes yesPulse { 0%{transform:scale(1)} 50%{transform:scale(1.35)} 100%{transform:scale(1)} }
+
+    /* SLIDER */
+    #slider {
+      width:100%; height:30px; appearance:none;
+      border-radius:30px;
+      background:linear-gradient(90deg,#ffd700,#ffb300,#ff8c00,#ffd700);
+      background-size:300% 100%;
+      animation:flowSlider 3s linear infinite;
+      outline:none;
+      box-shadow:0 0 20px rgba(255,180,0,.7);
+      cursor:pointer;
+    }
+    @keyframes flowSlider { to{background-position:300% 0} }
+    #slider::-webkit-slider-thumb {
+      appearance:none; width:38px; height:38px; border-radius:50%;
+      background:radial-gradient(circle,#fff,#ffd700);
+      border:3px solid white;
+      box-shadow:0 0 20px #ffb300, 0 0 40px gold;
+    }
+    #sliderPct { font-weight:900; color:#92650a; font-size:1.1rem; }
+    #sliderMsg { font-weight:700; color:#7a5000; font-size:.9rem; }
+
+    /* CAT BURST */
+    #catBurst { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:150; }
+    .burst-cat { position:absolute; top:-80px; font-size:2rem; animation:fallDown linear forwards; }
+
+    /* FINAL CARD */
+    #finalCard {
+      position:fixed; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      width:92%; max-width:400px;
+      background:rgba(255,252,230,.99);
+      padding:22px 18px; border-radius:28px;
+      text-align:center; display:none;
+      flex-direction:column; align-items:center; gap:12px;
+      z-index:500;
+      box-shadow:0 12px 50px rgba(255,180,0,.5), 0 0 100px rgba(255,200,0,.2);
+      animation:popIn .5s cubic-bezier(.34,1.56,.64,1);
+      overflow-y:auto; max-height:92vh;
+    }
+    .big-cat-emoji { font-size:3.5rem; animation:floatCat 2s ease-in-out infinite; }
+    .media-wrap {
+      width:100%; border-radius:16px; overflow:hidden;
+      box-shadow:0 4px 24px rgba(255,140,0,.4);
+      border:3px solid #ffd700;
+    }
+    .media-wrap audio { display:block; width:100%; border:none; border-radius:12px; }
+    .speaker-btn {
+      background: linear-gradient(135deg,#ffd700,#ffb300);
+      color: #3d2600; border: none; border-radius: 50%;
+      width: 60px; height: 60px; font-size: 24px;
+      cursor: pointer; transition: all 0.3s;
+      box-shadow: 0 4px 22px rgba(255,175,0,.6);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .speaker-btn:hover { transform: scale(1.1); box-shadow: 0 4px 36px rgba(255,175,0,.95); }
+    .speaker-btn.muted { opacity: 0.6; }
+    .speaker-btn.muted::before {
+      content: "❌"; position: absolute; font-size: 12px; color: #ff4444;
+      top: 2px; right: 2px; background: white; border-radius: 50%; width: 16px; height: 16px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .song-label {
+      font-size:.78rem; font-weight:800; color:#92650a;
+      background:rgba(255,215,0,.25); padding:4px 14px;
+      border-radius:12px;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:360px){
+      h2 { font-size:1.05rem; }
+      button { font-size:13px; padding:9px 18px; }
+      .cat-img { width:100px; height:100px; }
+      .bigGlow { font-size:2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="stars"></div>
+<div id="bgGlow"></div>
+<div id="emojiRain"></div>
+<div id="pageFlash"></div>
+<div id="bubble"></div>
+<div id="catBurst"></div>
+
+<!-- FINAL CARD WITH AUDIO -->
+<div id="finalCard">
+  <div class="big-cat-emoji">😸</div>
+  <h1 style="font-size:1.65rem;">I Am Yours 💛</h1>
+  <p style="font-weight:800;">Happy May 13, Riya! 🌙✨</p>
+  <div class="lyric" style="width:100%;">
+    "Main gehra tamas,<br>
+    tu sunehra savera…<br>
+    Main tera ho, main tera."
+    <small>— Kalank Title Track · Arijit Singh</small>
+  </div>
+  <button id="speakerBtn" class="speaker-btn muted" onclick="toggleAudio()">🔊</button>
+  <span class="song-label">🎵 Kalank Title Track — Pritam · Arijit Singh (2019)</span>
+  <button onclick="playAgain()">🔁 Play again</button>
+</div>
+
+<!-- HIDDEN AUDIO ELEMENT -->
+<audio id="bgAudio" loop>
+  <source src="Main Tera Main Tera (PenduJatt.Com.Se).mp3" type="audio/mpeg">
+</audio>
+
+<!-- SCREENS -->
+<div id="app">
+
+  <!-- S1: The Pun -->
+  <section class="screen active" id="s1">
+    <span class="badge fade">📅 May 13 — A Very Special Date</span>
+
+    <img class="cat-img fade d1"
+      src="https://cataas.com/cat/says/May%2013?width=240&height=240&fontSize=22&fontColor=gold"
+      onerror="this.src='https://placekitten.com/240/240'"
+      alt="Cat with May 13">
+    <span class="cat-caption fade d1">🐾 The cat already knows, Riya…</span>
+
+    <h2 class="fade d1">Do you know what May 13 means in Hindi?</h2>
+    <p class="fade d2">
+      <b>May</b> = "Main" &nbsp;·&nbsp; <b>13</b> = "Tera"<br>
+      So May 13 = <b style="color:#b8860b;font-size:1.1rem;">Main Tera</b> — "I am yours" 💛
+    </p>
+
+    <div class="btns fade d3">
+      <button class="yesBtn" onclick="yes1(event)">Yes, I knew! 😏</button>
+      <button class="noBtn"  onclick="no1(event)">No way! 😶</button>
+    </div>
+  </section>
+
+  <!-- S2: The Song -->
+  <section class="screen" id="s2">
+    <img class="cat-img fade"
+      src="https://cataas.com/cat/says/I%20am%20yours?width=240&height=240&fontSize=20&fontColor=white"
+      onerror="this.src='https://placekitten.com/241/241'"
+      alt="Cat I am yours">
+    <span class="cat-caption fade">🐱 "I am yours… purr"</span>
+
+    <h2 class="typeText" data-text="And there's a song made for exactly this moment… 🎵"></h2>
+    <div class="lyric fade d2">
+      "Main gehra tamas,<br>
+      tu sunehra savera…"
+      <small>— Kalank Title Track · Arijit Singh</small>
+    </div>
+
+    <div class="btns fade d3">
+      <button class="yesBtn" onclick="yes2(event)">I love this song! 🎶</button>
+      <button class="noBtn"  onclick="no2(event)">Never heard it 😶</button>
+    </div>
+    <button onclick="show('s1')" class="backBtn">← Back</button>
+  </section>
+
+  <!-- S3: The Question -->
+  <section class="screen" id="s3">
+    <img class="cat-img fade"
+      src="https://cataas.com/cat/says/Be%20Mine?width=240&height=240&fontSize=22&fontColor=gold"
+      onerror="this.src='https://placekitten.com/242/242'"
+      alt="Cat Be Mine">
+    <span class="cat-caption fade">🐾 Even the cat is asking…</span>
+
+    <h2 class="typeText" data-text="So on this May 13…"></h2>
+    <h3 class="fade d2">Are you mine? 💛🥺</h3>
+
+    <div class="btns fade d3">
+      <button class="yesBtn" onclick="yes3(event)">Yes! Always 😍</button>
+      <button class="noBtn"  onclick="no3(event)">No… 😶</button>
+    </div>
+    <button onclick="show('s2')" class="backBtn">← Back</button>
+  </section>
+
+  <!-- S4: Slider -->
+  <section class="screen" id="s4">
+    <img class="cat-img fade"
+      src="https://cataas.com/cat/says/Slide!?width=240&height=240&fontSize=26&fontColor=white"
+      onerror="this.src='https://placekitten.com/243/243'"
+      alt="Slide cat">
+
+    <h2 class="fade">How much am I yours? 🐱💛</h2>
+    <p id="sliderMsg" class="fade d1">Slide to reveal… 😌</p>
+    <input type="range" id="slider" min="0" max="100" value="0" style="width:100%;margin:10px 0;">
+    <p id="sliderPct">0%</p>
+  </section>
+
+  <!-- S5: Celebration -->
+  <section class="screen" id="s5">
+    <h1 class="bigGlow">I AM YOURS! 💛</h1>
+    <p class="fade d1" style="font-weight:800;font-size:1.05rem;">Happy May 13 🌙✨</p>
+    <div class="lyric fade d2">
+      "Main tera ho, main tera…<br>
+      Musafir main bhatka, tu mera."
+      <small>— Kalank · Arijit Singh</small>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* STARS */
+(()=>{
+  const c=document.getElementById('stars');
+  for(let i=0;i<100;i++){
+    const s=document.createElement('div'); s.className='star';
+    const sz=Math.random()*2.5+.4;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${1.5+Math.random()*4}s;animation-delay:${Math.random()*6}s`;
+    c.appendChild(s);
+  }
+})();
+
+/* EMOJI RAIN */
+const emojiRain=document.getElementById('emojiRain');
+const rainEmojis=['💛','🐱','🎵','✨','🌙','😸','💫','🐾','⭐','🌟'];
+setInterval(()=>{
+  const d=document.createElement('div'); d.className='drop';
+  d.textContent=rainEmojis[Math.floor(Math.random()*rainEmojis.length)];
+  d.style.left=Math.random()*100+'vw';
+  d.style.animationDuration=(5+Math.random()*6)+'s';
+  emojiRain.appendChild(d);
+  setTimeout(()=>d.remove(),12000);
+},600);
+
+/* BUBBLE */
+const bubble=document.getElementById('bubble');
+let bTimer=null;
+function showBubble(btn,msg){
+  if(bTimer) clearTimeout(bTimer);
+  bubble.textContent=msg;
+  const r=btn.getBoundingClientRect();
+  bubble.style.left=(r.left+r.width/2)+'px';
+  bubble.style.top=(r.bottom+12)+'px';
+  bubble.classList.add('show');
+  bTimer=setTimeout(()=>bubble.classList.remove('show'),2800);
+}
+
+/* JUMP AWAY */
+function jumpSafe(btn){
+  const box=document.getElementById('app').getBoundingClientRect();
+  const yes=document.querySelector('.screen.active .yesBtn');
+  const yb=yes?yes.getBoundingClientRect():null;
+  let x,y,t=0;
+  do{
+    x=box.left+35+Math.random()*(box.width-150);
+    y=box.top+35+Math.random()*(box.height-150);
+    t++;
+  }while(yb&&overlap(x,y,yb)&&t<25);
+  btn.style.position='fixed'; btn.style.left=x+'px'; btn.style.top=y+'px';
+}
+function overlap(x,y,b){ return x>b.left-90&&x<b.right+90&&y>b.top-90&&y<b.bottom+90; }
+
+/* SHAKE */
+function shake(){
+  const a=document.getElementById('app'); let i=0;
+  const t=setInterval(()=>{
+    a.style.transform=`translate(${Math.random()*6-3}px,${Math.random()*6-3}px)`;
+    if(++i>8){clearInterval(t);a.style.transform='';}
+  },35);
+}
+
+/* AUDIO TOGGLE */
+let audioEnabled = localStorage.getItem('audioEnabled') === 'true';
+function toggleAudio(){
+  const audio = document.getElementById('bgAudio');
+  const btn = document.getElementById('speakerBtn');
+  
+  if(audioEnabled){
+    audio.pause();
+    btn.classList.add('muted');
+    btn.textContent = '🔊';
+    audioEnabled = false;
+  } else {
+    audio.play().catch(e => console.log('Audio play failed:', e));
+    btn.classList.remove('muted');
+    btn.textContent = '🔊';
+    audioEnabled = true;
+  }
+  
+  localStorage.setItem('audioEnabled', audioEnabled);
+}
+
+/* PLAY AGAIN */
+function playAgain(){
+  // Reset screen counters
+  n1 = 0; n2 = 0; n3 = 0; sliderDone = false;
+  
+  // Reset slider
+  sldr.value = 0;
+  sldrPct.textContent = '0%';
+  sldrMsg.textContent = 'Slide to 100% to continue… 💛';
+  
+  // Hide final card
+  document.getElementById('finalCard').style.display = 'none';
+  
+  // Show first screen
+  show('s1');
+  
+  // Clear any active timers
+  if(bTimer) clearTimeout(bTimer);
+  
+  // Clear cat burst
+  document.getElementById('catBurst').innerHTML = '';
+  
+  // Reinitialize typewriters
+  document.querySelectorAll('.screen.active .typeText').forEach(el=>{
+    const raw=el.dataset.text||''; el.textContent='';
+    let i=0; const iv=setInterval(()=>{
+      if(i<raw.length) el.textContent+=raw[i++]; else clearInterval(iv);
+    },42);
+  });
+}
+
+// Initialize audio state on page load
+window.addEventListener('load', () => {
+  const btn = document.getElementById('speakerBtn');
+  if(audioEnabled){
+    btn.classList.remove('muted');
+    // Don't auto-play on load, wait for user interaction
+  } else {
+    btn.classList.add('muted');
+  }
+});
+
+/* SHOW SCREEN */
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.classList.add('active');
+  el.querySelectorAll('.fade').forEach(e=>{ e.style.animation='none'; void e.offsetWidth; e.style.animation=''; });
+  el.querySelectorAll('.typeText').forEach(el2=>{
+    const raw=el2.dataset.text||''; el2.textContent='';
+    let i=0; const iv=setInterval(()=>{
+      if(i<raw.length) el2.textContent+=raw[i++]; else clearInterval(iv);
+    },42);
+  });
+}
+
+/* YES EFFECT */
+function yesEff(btn){ btn.classList.add('yesPulse'); shake(); setTimeout(()=>btn.classList.remove('yesPulse'),500); }
+
+/* FLASH */
+function flashPage(){
+  const f=document.getElementById('pageFlash');
+  f.classList.add('flash');
+  setTimeout(()=>f.classList.remove('flash'),700);
+}
+
+/* CAT BURST */
+function catBurst(){
+  const cb=document.getElementById('catBurst');
+  const items=['😸','🐱','🐾','😻','💛','✨','🌟','🎵','💫','⭐'];
+  for(let i=0;i<35;i++){
+    setTimeout(()=>{
+      const d=document.createElement('div'); d.className='burst-cat';
+      d.textContent=items[Math.floor(Math.random()*items.length)];
+      d.style.left=Math.random()*100+'vw';
+      d.style.animationDuration=(3+Math.random()*4)+'s';
+      cb.appendChild(d);
+      setTimeout(()=>d.remove(),8000);
+    },i*70);
+  }
+}
+
+/* SCREEN COUNTERS */
+let n1=0,n2=0,n3=0;
+
+function yes1(e){ yesEff(e.target); setTimeout(()=>show('s2'),500); }
+function no1(e){
+  n1++; jumpSafe(e.target);
+  const m=["Come on, now you know! 😄","May = Main, 13 = Tera 😏","It's the pun of the year! 😂","You totally knew! 👀","The cat told you, right? 🐱"];
+  showBubble(e.target,m[n1%m.length]);
+  if(n1>=8) yes1(e);
+}
+
+function yes2(e){ yesEff(e.target); setTimeout(()=>show('s3'),500); }
+function no2(e){
+  n2++; jumpSafe(e.target);
+  const m=["Kalank! Arijit Singh!! 🎵","It's SO beautiful 😭","Add it to your playlist NOW 😤","You're missing out! 🎶","The cat has heard it. Why haven't you? 🐱"];
+  showBubble(e.target,m[n2%m.length]);
+  if(n2>=5) yes2(e);
+}
+
+function yes3(e){ yesEff(e.target); setTimeout(()=>show('s4'),500); }
+function no3(e){
+  n3++; jumpSafe(e.target);
+  const m=["The cat disagrees 🐱","Even the stars say yes ✨","It's May 13! You have no choice! 😂","The whole internet is yours today 💛","SAY YES!! 😤","Pretty please? 🥺"];
+  showBubble(e.target,m[n3%m.length]);
+  if(n3>=8) yes3(e);
+}
+
+/* SLIDER */
+let sliderDone=false;
+const sldr=document.getElementById('slider');
+const sldrPct=document.getElementById('sliderPct');
+const sldrMsg=document.getElementById('sliderMsg');
+
+sldr.addEventListener('input',()=>{
+  const v=+sldr.value;
+  sldrPct.textContent=v+'%';
+  shake();
+  if(v<25)       sldrMsg.textContent='Keep going… 😌';
+  else if(v<50)  sldrMsg.textContent='Getting warmer… 💛';
+  else if(v<75)  sldrMsg.textContent='Oh yes yes!! 😍';
+  else if(v<95)  sldrMsg.textContent='COMPLETELY YOURS! 😻';
+  else if(v<100) sldrMsg.textContent='Almost… almost… 💫';
+
+  if(v>=100 && !sliderDone){
+    sliderDone=true;
+    flashPage();
+    catBurst();
+    setTimeout(()=>{
+      show('s5');
+      setTimeout(()=>{ document.getElementById('finalCard').style.display='flex'; },2000);
+    },600);
+  }
+});
+
+/* INIT TYPEWRITERS */
+document.querySelectorAll('.screen.active .typeText').forEach(el=>{
+  const raw=el.dataset.text||''; el.textContent='';
+  let i=0; const iv=setInterval(()=>{
+    if(i<raw.length) el.textContent+=raw[i++]; else clearInterval(iv);
+  },42);
+});
+</script>
+</body>
+</html>
